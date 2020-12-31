@@ -29,7 +29,7 @@ search.addEventListener("keyup",(e) => {
                 data.forEach((item) => {
                     console.log(item)
                     
-                    tableoutput.innerHTML += '<tr><td></td>'+'<td>'+ item.status_action +'</td>'+ '<td>'+ item.status_webstie +'</td>' + '<td>'+ item.website_name +'</td>'+ '<td>'+ item.url +'</td>'+ '<td>'+ item.message +'</td><td></td></tr>';
+                    tableoutput.innerHTML += '<tr><td></td>'+'<td>'+ item.status_action +'</td>'+ '<td>'+ item.status_webstie +'</td>' + '<td>'+ item.website_name +'</td>'+ '<td>'+ item.url +'</td>'+ '<td>'+ item.message +'</td>'+ '<td></td></tr>';
 
                     
                 });
