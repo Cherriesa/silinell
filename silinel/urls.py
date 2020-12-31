@@ -21,7 +21,7 @@ from silinell import views
 from django.contrib.auth import views as auth_views
 from django.urls import path, include 
 from django.views.generic.base import TemplateView # new
-
+from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
@@ -31,8 +31,8 @@ urlpatterns = [
     path('login/', views.login.as_view(), name='login'),
     path('dashboard/', views.dashboardhome.as_view(), name='dashboard'),
     path('dashboard/incident', views.dashboardAddwebsite.as_view(), name='incident_url'),
-    path('dashboard/incident/delete/<int:pk>', views.websiteDeleteView.as_view(), name='incident_url_del'),
-    path('dashboard/addwebsite/search', views.dashboardAddwebsite.as_view(), name='AddWbsite_search'),
+    path('dashboard/incident/delete/<int:pk>', views.IncidentDeleteView.as_view(), name='incident_url_del'),
+    path('dashboard/incident/search', csrf_exempt(views.search_website), name='incident_search'),
 
 
     

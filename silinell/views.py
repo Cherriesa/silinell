@@ -44,13 +44,17 @@ class dashboardhome(View):
     
    return render(request, self.template_name)
 
-class websiteDeleteView(DeleteView):
+class IncidentDeleteView(DeleteView):
     model = incident
     success_url= '/dashboard/incident'
     
     
     def get(self, *args, **kwargs):
      return self.post(*args, **kwargs)
+ 
+class IncidentUpdateView(UpdateView):
+    model = incident
+    template_name = ".html"
      
 
     
@@ -79,11 +83,7 @@ class dashboardAddwebsite(View):
         
         return render(request, self.template_name, {'form': form,'weblist_param': weblist_param,'counter':counter})
   
-    def search_website(request):
-        if request.method == "POST":
-            search_str = json.loads(request.body).get('searchaddwebsite')
-            
-            websites = incident.object.filter
+    
             
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -98,6 +98,22 @@ class dashboardAddwebsite(View):
 class websiteUpdate(UpdateView): 
     model = incident
     template_name = 'update-website.html'
+
+def search_website(request):
+        if request.method == "POST":
+            search_str = json.loads(request.body).get('searchtxt')
+            print(search_str)
+            searcher = incident.objects.filter(website_name__startswith = search_str)| incident.objects.filter(status_webstie__startswith = search_str)|incident.objects.filter(
+                status_action__startswith= search_str )| incident.objects.filter(
+                url__startswith = search_str )|incident.objects.filter(
+                message__startswith = search_str )
+            
+            data = searcher.values()
+            print(data)
+            
+            return JsonResponse(list(data),safe=False)
+            
+            
     
     
 
