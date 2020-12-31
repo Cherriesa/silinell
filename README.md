@@ -1,6 +1,6 @@
 # what silinell is?
 
-Silinell is downtime status page inspired from Cachet .
+Silinell is downtime status page inspired from [Cachet](https://cachethq.io/) .
 
 ## Installation
 
