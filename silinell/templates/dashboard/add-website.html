@@ -17,10 +17,10 @@
 <table class="table" id="tableoutput">
    <thead>
     <tr>
-      <th scope="col"></th>
+      <th scope="col"></th> 
+      <th scope="col">name</th>
       <th scope="col">action</th>
       <th scope="col">status</th>
-      <th scope="col">name</th>
       <th scope="col">url</th>
       <th scope="col">message</th>
       <th scope="col"></th>
@@ -56,12 +56,19 @@
 
 <tr>
        
-      <td>{{ forloop.counter }}</td>
+     
+      <td> {% if web.stickied == 'Stikced' %}
+        <a href="#" data-toggle="tooltip"  title="this incident is stickied"><span data-toggle="tooltip" data-placement="top" data-feather="star"></span></a> </td>
+          {%endif%} 
+      <td>
+         {{web.website_name}}
+        </td>
+        
       <td>{{web.status_action}}</td>
       <td>{{web.status_webstie}}</td>
-      <td>{{web.website_name}}</td>
       <td>{{web.url}}</td>
       <td>{{web.message}}</td>
+      
       <td><a class="btn btn-danger" href="{% url 'incident_url_del' pk=web.pk %}">delete</a></td>
 
 
@@ -98,6 +105,11 @@
 
 
 <script src="{% static 'js/addwebsite.js'%}"></script>
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
 
 
 

@@ -56,18 +56,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
 class incident(models.Model):
     STATUS_ACTION_CHOICES = (
-        ('I', 'Identified'),
-        ('W', 'watch'),
-        ('F', 'fixed'),
-        ('F', 'investigating'),
+        ('Identified', 'identified'),
+        ('Watch', 'watch'),
+        ('Fixed', 'fixed'),
+        ('Investigating', 'investigating'),
     )
     STATUS_UPTIME_CHOICES = (
-        ('D', 'Down'),
-        ('U', 'up'),
+        ('Down', 'Down'),
+        ('Up', 'up'),
      
     )
-    status_action = models.CharField(max_length=1, choices= STATUS_ACTION_CHOICES )
-    status_webstie = models.CharField(max_length=1, choices= STATUS_UPTIME_CHOICES)
+    STATUS_STICKED_CHOICES = (
+        ('Stikced', 'Stikced'),
+        ('Un Stikced', 'Un Stikced'),
+     
+    )
+    status_action = models.CharField(max_length=40, choices= STATUS_ACTION_CHOICES )
+    status_webstie = models.CharField(max_length=40, choices= STATUS_UPTIME_CHOICES)
+    stickied = models.CharField(max_length=40, choices= STATUS_STICKED_CHOICES, default="Stikced" )
     website_name = models.CharField(max_length=50)
     url = models.CharField(max_length=30, blank=True)
     message  = models.CharField(max_length=30, blank=True)
