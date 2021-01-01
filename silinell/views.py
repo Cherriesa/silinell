@@ -13,6 +13,7 @@ from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 
@@ -70,6 +71,7 @@ class dashboardAddwebsite(View):
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.initial)
         web_list = incident.objects.all().order_by('id')
+        print(self.request.path_info)
         counter = incident.objects.count()
         page_num = request.GET.get('page', 1)
         paginator = Paginator(web_list, 5)
@@ -86,13 +88,42 @@ class dashboardAddwebsite(View):
     
             
     def post(self, request, *args, **kwargs):
+        htmldata = dict()
         form = self.form_class(request.POST)
+        if request.method == "POST":
+            search_str = json.loads(request.body).get('searchtxt')
+            print(search_str)
+            searcher = incident.objects.filter(website_name__startswith = search_str)| incident.objects.filter(status_webstie__startswith = search_str)|incident.objects.filter(
+                status_action__startswith= search_str )| incident.objects.filter(
+                url__startswith = search_str )|incident.objects.filter(
+                message__startswith = search_str )
+            
+        data = searcher.values()
+        web_list = data
+        print(self.request.path_info)
+        counter = incident.objects.count()
+        page_num = request.GET.get('page', 1)
+        paginator = Paginator(web_list, 5)
+        try:
+           weblist_param = paginator.page(page_num)
+        except PageNotAnInteger:
+            weblist_param = paginator.page(1)
+        except EmptyPage:
+            weblist_param = paginator.page(paginator.num_pages)
+        
+       
+            
         if form.is_valid():
             form.save();
             # <process form cleaned data>
             return HttpResponseRedirect(self.request.path_info)
         
-        return render(request, self.template_name, {'form': form})
+        context  = {'form': form,'weblist_param': weblist_param}
+        htmldata['html_data'] = render_to_string(self.template_name, context, request=request)
+        print(htmldata)
+        return JsonResponse(htmldata, safe=False)
+
+    
       
       
 class websiteUpdate(UpdateView): 
