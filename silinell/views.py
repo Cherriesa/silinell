@@ -14,7 +14,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-
+import math
 
 
 class SignUp(generic.CreateView):
@@ -67,61 +67,27 @@ class dashboardAddwebsite(View):
     template_name = 'dashboard/add-website.html'
     
     
+    
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.initial)
         web_list = incident.objects.all().order_by('id')
-        print(self.request.path_info)
-        counter = incident.objects.count()
-        page_num = request.GET.get('page', 1)
-        paginator = Paginator(web_list, 5)
-        print(paginator.num_pages)
-        try:
-           weblist_param = paginator.page(page_num)
-        except PageNotAnInteger:
-            weblist_param = paginator.page(1)
-        except EmptyPage:
-            weblist_param = paginator.page(paginator.num_pages)
+      
         
-        return render(request, self.template_name, {'form': form,'weblist_param': weblist_param,'counter':counter})
+        
+        return render(request, self.template_name, {'form': form,'weblist_param': web_list})
   
     
             
     def post(self, request, *args, **kwargs):
         htmldata = dict()
         form = self.form_class(request.POST)
-        if request.method == "POST":
-            search_str = json.loads(request.body).get('searchtxt')
-            print(search_str)
-            searcher = incident.objects.filter(website_name__startswith = search_str)| incident.objects.filter(status_webstie__startswith = search_str)|incident.objects.filter(
-                status_action__startswith= search_str )| incident.objects.filter(
-                url__startswith = search_str )|incident.objects.filter(
-                message__startswith = search_str )
-            
-        data = searcher.values()
-        web_list = data
-        print(self.request.path_info)
-        counter = incident.objects.count()
-        page_num = request.GET.get('page', 1)
-        paginator = Paginator(web_list, 5)
-        try:
-           weblist_param = paginator.page(page_num)
-        except PageNotAnInteger:
-            weblist_param = paginator.page(1)
-        except EmptyPage:
-            weblist_param = paginator.page(paginator.num_pages)
-        
-       
-            
         if form.is_valid():
             form.save();
-            # <process form cleaned data>
             return HttpResponseRedirect(self.request.path_info)
-        
-        context  = {'form': form,'weblist_param': weblist_param}
-        htmldata['html_data'] = render_to_string(self.template_name, context, request=request)
-        print(htmldata)
-        return JsonResponse(htmldata, safe=False)
+        context  = {'form': form}
+        return render(request, self.template_name, context)
+
 
     
       
@@ -131,19 +97,32 @@ class websiteUpdate(UpdateView):
     template_name = 'update-website.html'
 
 def search_website(request):
+        getalldata = incident.objects.all().order_by('id')
+        htmldata = dict()
         if request.method == "POST":
             search_str = json.loads(request.body).get('searchtxt')
-            print(search_str)
-            searcher = incident.objects.filter(website_name__startswith = search_str)| incident.objects.filter(status_webstie__startswith = search_str)|incident.objects.filter(
-                status_action__startswith= search_str )| incident.objects.filter(
-                url__startswith = search_str )|incident.objects.filter(
-                message__startswith = search_str )
+            if search_str == "":
+                searcher = getalldata
+                print("data kosong revert ke all data")
+            else:
+                searcher = incident.objects.filter(website_name__icontains= search_str)| incident.objects.filter(status_webstie__icontains = search_str)|incident.objects.filter(
+                status_action__icontains= search_str )| incident.objects.filter(
+                url__icontains = search_str )|incident.objects.filter(
+                message__icontains = search_str )
+             
             
-            data = searcher.values()
-            print(data)
+        
+        
+        data = searcher.values()
+        weblist_param = data
+       
+       
+       
             
-            return JsonResponse(list(data),safe=False)
-            
+   
+        context  = {'weblist_param': weblist_param}
+        htmldata['html_data'] = render_to_string('dashboard/add-website-component.html', context, request=request)
+        return JsonResponse(htmldata, safe=False)
             
     
     
