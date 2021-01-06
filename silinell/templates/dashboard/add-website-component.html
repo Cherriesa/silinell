@@ -1,102 +1,96 @@
 {% load static %}
-<div class="thecontainer">
+
+
+
 
 </form>
-<br>
-<br>
-<table class="table table-striped" id="tableoutput">
-   <thead>
-    <tr>
-      <th scope="col"></th> 
-      <th scope="col">name</th>
-      <th scope="col">action</th>
-      <th scope="col">status</th>
-      <th scope="col">url</th>
-      <th scope="col">message</th>
-      <th scope="col"></th>
-    
-    </tr>
-  </thead>
-  <tbody class="tableoutput">
-  
+<style>
 
-  
-  </tbody>
-  <tbody class="searchable ">
-  <div class="row">
-  <div class="col-md-6"></div>
-    <div class="col-md-6">  
+.current {
+  color: green;
+}
+
+#pagin li {
+  display: inline-block;
+}
+</style>
+<br>
+
+
+{% for web in weblist_param %}
+
+
+<div class="card line-content mt-4">
+  <div class="card-body">
+       
+     <h2>
+     
+         {{web.website_name}}
+          {% if web.status_webstie == 'Up' %}
+        <a href="#" data-toggle="tooltip"  title="this incident is UP"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-up"></span></a>
+        {%else%}
+         <a href="#" data-toggle="tooltip"  title="this incident is Down"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-down"></span></a>
+
+          {%endif%}
+           {% if web.stickied == 'Stikced' %}
+        <a href="#" data-toggle="tooltip"  title="this incident is stickied"><span data-toggle="tooltip" data-placement="top" data-feather="star"></span></a>
+          {%endif%}
+         
+        </h2>
+      
+     
     
+      <a>
+      {% if web.status_action == 'Identified' %}
+       <span class="badge badge-primary"> {{web.status_action}}</span>
+      {% elif web.status_action == 'Fixed' %}
+       <span class="badge badge-success"> {{web.status_action}}</span>
+      {% elif web.status_action == 'Watch' %}
+       <span class="badge badge-secondary"> {{web.status_action}}</span>
+      {% elif web.status_action == 'Investigating' %}
+       <span class="badge badge-info"> {{web.status_action}}</span>
+      {%endif%}
+
+
+
+
+      </a>
+         
+      <p>Message:&nbsp;{{web.message}}</p>
+      
+      <a class="btn btn-danger" style="float:right" href="{% url 'incident_url_del' pk=web.id %}">delete</a>
+
+
+    </tr>
+</div>
 </div>
 
 
-  </div>
-<br>
-{% if counter == 0 %}
-
-  <td align="center" style="text-align:center;background-color: #E9ECEF;" width="100%" colspan="7">no data</td>
-
-
-
-
-
-{%endif%}
-{% for web in weblist_param %}
-
-<tr>
-       
-     
-      <td> {% if web.stickied == 'Stikced' %}
-        <a href="#" data-toggle="tooltip"  title="this incident is stickied"><span data-toggle="tooltip" data-placement="top" data-feather="star"></span></a> </td>
-          {%endif%} 
-      <td>
-         {{web.website_name}}
-        </td>
-        
-      <td>{{web.status_action}}</td>
-      <td>{{web.status_webstie}}</td>
-      <td>{{web.url}}</td>
-      <td>{{web.message}}</td>
-      
-      <td><a class="btn btn-danger" href="{% url 'incident_url_del' pk=web.id %}">delete</a></td>
-
-
-    </tr>
-
 
 {% endfor %}
-</tbody>
-</table>
+<br>
 
-<center>
-{% if weblist_param.has_other_pages %}
-  <ul class="pagination">
-    {% if weblist_param.has_previous %}
-      <li><a href="?page={{ weblist_param.previous_page_number }}">«&nbsp;</a></li>
-    {% else %}
-      <li class="disabled"><span>«&nbsp;</span></li>
-    {% endif %}
-    {% for i in weblist_param.paginator.page_range %}
-      {% if weblist_param.number == i %}
-        <li class="active"><span>{{ i }}&nbsp; <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }} &nbsp;</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if weblist_param.has_next %}
-      <li><a href="?page={{ weblist_param.next_page_number }}">»&nbsp;</a></li>
-    {% else %}
-      <li class="disabled"><span>»</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
-</center>
+<ul id="pagin">
+         
+</ul>
+
+
+
+
+
+
 
 
 <script src="{% static 'js/addwebsite.js'%}"></script>
+<script src="{% static 'js/pagination.js'%}"></script>
+
+
 <script>
   $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
+    
   });
+  
+
+  
   </script>
-  </div>

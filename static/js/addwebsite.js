@@ -4,6 +4,7 @@ const tableoutput = document.querySelector(".tableoutput")
 const thecontainer = document.querySelector(".thecontainer")
 
 
+
 search.addEventListener("keyup",(e) => {
     const searchvalue = e.target.value;
     console.log("hasilnya",searchvalue)
@@ -12,7 +13,6 @@ search.addEventListener("keyup",(e) => {
 
     
 
-        tableoutput.innerHTML = ""
 
         fetch("/dashboard/incident/search",{
             body:JSON.stringify({searchtxt:searchvalue}),
@@ -24,6 +24,10 @@ search.addEventListener("keyup",(e) => {
         .then((datahtml) =>{
             console.log("data",datahtml);
             thecontainer.innerHTML=datahtml.html_data
+            var script= document.createElement('script');
+            script.type= 'text/javascript';
+            script.src= '/static/js/pagination.js';
+            thecontainer.appendChild(script);
 
             
             
