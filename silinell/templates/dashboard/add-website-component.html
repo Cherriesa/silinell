@@ -6,6 +6,26 @@
 </form>
 <style>
 
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 10px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.current {
+  color: green;
+}
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+
 .current {
   color: green;
 }
@@ -13,14 +33,64 @@
 #pagin li {
   display: inline-block;
 }
+
+.prev {
+  cursor: pointer;
+}
+
+.next {
+  cursor: pointer;
+}
+
+.last{
+  cursor:pointer;
+  margin-left:5px;
+}
+
+.first{
+  cursor:pointer;
+  margin-right:5px;
+}
+.prev {
+  cursor: pointer;
+}
+
+.next {
+  cursor: pointer;
+}
+
+.last{
+  cursor:pointer;
+  margin-left:5px;
+}
+
+.first{
+  cursor:pointer;
+  margin-right:5px;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 100%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+}
 </style>
 <br>
+<div style="height:500px">
+<div class= "row" >
 
 
 {% for web in weblist_param %}
+<div class ="column">
 
 
-<div class="card line-content mt-4">
+<div class="card line-content mt-4" >
   <div class="card-body">
        
      <h2>
@@ -40,7 +110,7 @@
       
      
     
-      <a>
+      <h4>
       {% if web.status_action == 'Identified' %}
        <span class="badge badge-primary"> {{web.status_action}}</span>
       {% elif web.status_action == 'Fixed' %}
@@ -54,11 +124,11 @@
 
 
 
-      </a>
+      </h4>
          
       <p>Message:&nbsp;{{web.message}}</p>
       
-      <a class="btn btn-danger" style="float:right" href="{% url 'incident_url_del' pk=web.id %}">delete</a>
+      <a class="confirm-delete" style="float:right;color:red"  href="{% url 'incident_url_del' pk=web.id %}">delete?</a>
 
 
     </tr>
@@ -66,13 +136,18 @@
 </div>
 
 
-
+</div>
 {% endfor %}
+</div>
+</div>
 <br>
-
-<ul id="pagin">
+<center>
+<nav aria-label="Page navigation example">
+<ul  class="pagination  justify-content-center"id="pagin">
          
 </ul>
+</nav>
+</center>
 
 
 
@@ -81,8 +156,11 @@
 
 
 
-<script src="{% static 'js/addwebsite.js'%}"></script>
+
+
 <script src="{% static 'js/pagination.js'%}"></script>
+
+
 
 
 <script>
@@ -93,4 +171,7 @@
   
 
   
+
+  
   </script>
+  

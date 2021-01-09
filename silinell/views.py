@@ -115,7 +115,8 @@ def search_website(request):
         
         data = searcher.values()
         weblist_param = data
-       
+        
+        print(data)
        
        
             
