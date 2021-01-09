@@ -55,10 +55,10 @@ slide = function(sens){
 }
 
 showPage = function(page) {
-	  $(".line-content").css('display','none');
+	  $(".line-content").hide();
 	  $(".line-content").each(function(n) {
 	      if (n >= pageSize * (page - 1) && n < pageSize * page)
-	          $(this).css('display','grid');;
+	          $(this).show()
 	  });        
 }
     

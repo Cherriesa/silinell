@@ -11,12 +11,10 @@ $(document).on('click', '.confirm-delete', function(){
 
 
 search.addEventListener("keyup",(e) => {
-    
+    e.preventDefault();
     const searchvalue = e.target.value;
 
-    const scriptPromise = new Promise((resolve, reject) => {
-        $.getScript( "/static/js/pagination.js" );
-      });
+    
 
         fetch("/dashboard/incident/search",{
             body:JSON.stringify({searchtxt:searchvalue}),
@@ -26,6 +24,7 @@ search.addEventListener("keyup",(e) => {
 
         })
         .then((res) => res.json())
+    
         
 
 
@@ -34,6 +33,8 @@ search.addEventListener("keyup",(e) => {
         
         .then((datahtml) =>{
             thecontainer.innerHTML=datahtml.html_data
+            $(boxscript).html("<script src='/static/js/pagination.js'></script>");
+
             
 
 
@@ -46,11 +47,13 @@ search.addEventListener("keyup",(e) => {
 
 
         })
+    
+
       
        
         
            
-       
+     
 
 
 
@@ -59,12 +62,10 @@ search.addEventListener("keyup",(e) => {
 
 
 
-    }
-
     
-
-
-
-
-);
+    
+    
+    
+    
+});
 
