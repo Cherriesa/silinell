@@ -32,8 +32,8 @@ search.addEventListener("keyup",(e) => {
           
         
         .then((datahtml) =>{
-            thecontainer.innerHTML=datahtml.html_data
-            $(boxscript).html("<script src='/static/js/pagination.js'></script>");
+            $(thecontainer).html('')
+            $(thecontainer).html(datahtml.html_data)
 
             
 

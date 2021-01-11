@@ -1,93 +1,23 @@
 {% load static %}
 
-
+ <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
 
 
 </form>
 <style>
 
-/* Remove extra left and right margins, due to padding */
-.row {margin: 0 10px;}
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.current {
-  color: green;
-}
-/* Float four columns side by side */
-.column {
-  float: left;
-  width: 25%;
-  padding: 0 10px;
-}
-
-
-.current {
-  color: green;
-}
-
-#pagin li {
-  display: inline-block;
-}
-
-.prev {
-  cursor: pointer;
-}
-
-.next {
-  cursor: pointer;
-}
-
-.last{
-  cursor:pointer;
-  margin-left:5px;
-}
-
-.first{
-  cursor:pointer;
-  margin-right:5px;
-}
-.prev {
-  cursor: pointer;
-}
-
-.next {
-  cursor: pointer;
-}
-
-.last{
-  cursor:pointer;
-  margin-left:5px;
-}
-
-.first{
-  cursor:pointer;
-  margin-right:5px;
-}
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 100%;
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-
-}
 </style>
 <br>
-<div style="height:500px">
+<div style="height:100%">
 <div class= "row" >
 
 
 {% for web in weblist_param %}
-<div class ="column">
+<div class ="col-md-4">
 
 
 <div class="card line-content mt-4" >
@@ -96,14 +26,14 @@
      <h2>
      
          {{web.website_name}}
-          {% if web.status_webstie == 'Up' %}
-        <a href="#" data-toggle="tooltip"  title="this incident is UP"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-up"></span></a>
+          {% if web.status_website == 'Up' %}
+        <a href="#" data-toggle="tooltip" style='color:green'  title="this incident is up"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-up"></span></a>
         {%else%}
-         <a href="#" data-toggle="tooltip"  title="this incident is Down"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-down"></span></a>
+         <a href="#" data-toggle="tooltip" style='color:red' title="this incident is down"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-down"></span></a>
 
           {%endif%}
            {% if web.stickied == 'Stikced' %}
-        <a href="#" data-toggle="tooltip"  title="this incident is stickied"><span data-toggle="tooltip" data-placement="top" data-feather="star"></span></a>
+        <a href="#" data-toggle="tooltip" style='color:black'  title="this incident is stickied"><span data-toggle="tooltip" data-placement="top" data-feather="award"></span></a>
           {%endif%}
          
         </h2>
@@ -112,13 +42,13 @@
     
       <h4>
       {% if web.status_action == 'Identified' %}
-       <span class="badge badge-primary"> {{web.status_action}}</span>
+       <span class="badge badge-primary"><span data-toggle="tooltip" data-placement="top" data-feather="flag"></span>&nbsp;{{web.status_action}}</span>
       {% elif web.status_action == 'Fixed' %}
-       <span class="badge badge-success"> {{web.status_action}}</span>
+       <span class="badge badge-success"><span data-toggle="tooltip" data-placement="top" data-feather="check-circle"></span>&nbsp;{{web.status_action}}</span>
       {% elif web.status_action == 'Watch' %}
-       <span class="badge badge-secondary"> {{web.status_action}}</span>
+       <span class="badge badge-secondary"><span data-toggle="tooltip" data-placement="top" data-feather="eye"></span>&nbsp;{{web.status_action}}</span>
       {% elif web.status_action == 'Investigating' %}
-       <span class="badge badge-info"> {{web.status_action}}</span>
+       <span class="badge badge-info"><span data-toggle="tooltip" data-placement="top" data-feather="search"></span>&nbsp;{{web.status_action}}</span>
       {%endif%}
 
 
@@ -143,7 +73,7 @@
 <br>
 <center>
 <nav aria-label="Page navigation example">
-<ul  class="pagination  justify-content-center"id="pagin">
+<ul  class="pagination justify-content-center"id="pagin">
          
 </ul>
 </nav>
@@ -158,20 +88,25 @@
 
 
 
-<script src="{% static 'js/pagination.js'%}"></script>
 
 
 
 
 <script>
   $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
+    $('[data-toggle="tooltip"]').tooltip();  
+    $.getScript("/static/js/pagination.js", function() {
+     con
+     });
+
     
   });
+
+
   
 
   
 
   
   </script>
-  
+

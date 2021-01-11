@@ -105,7 +105,7 @@ def search_website(request):
                 searcher = getalldata
                 print("data kosong revert ke all data")
             else:
-                searcher = incident.objects.filter(website_name__icontains= search_str)| incident.objects.filter(status_webstie__icontains = search_str)|incident.objects.filter(
+                searcher = incident.objects.filter(website_name__icontains= search_str)| incident.objects.filter(status_website__icontains = search_str)|incident.objects.filter(
                 status_action__icontains= search_str )| incident.objects.filter(
                 url__icontains = search_str )|incident.objects.filter(
                 message__icontains = search_str )

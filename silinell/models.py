@@ -72,7 +72,7 @@ class incident(models.Model):
      
     )
     status_action = models.CharField(max_length=40, choices= STATUS_ACTION_CHOICES )
-    status_webstie = models.CharField(max_length=40, choices= STATUS_UPTIME_CHOICES)
+    status_website = models.CharField(max_length=40, choices= STATUS_UPTIME_CHOICES )
     stickied = models.CharField(max_length=40, choices= STATUS_STICKED_CHOICES, default="Stikced" )
     website_name = models.CharField(max_length=50)
     url = models.CharField(max_length=30, blank=True)

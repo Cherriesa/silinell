@@ -6,14 +6,27 @@ from .models import *
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
-
+from django.utils.safestring import mark_safe
 
 class Formaddwebsbite(forms.ModelForm):
-    
+    STATUS_ACTION_CHOICES = (
+        ('Identified', 'identified'),
+        ('Watch', 'watch'),
+        ('Fixed', 'fixed'),
+        ('Investigating', 'investigating'),
+    )
+    status_action = forms.ChoiceField(
+            choices=STATUS_ACTION_CHOICES,
+            initial=0, 
+           widget=forms.RadioSelect(
+           ))
+  
     class Meta:
         model = incident
-        fields = '__all__'
+        fields = ('website_name','status_action','status_website','stickied','url','message')
         widget = {
+
+           
             
         }
 
