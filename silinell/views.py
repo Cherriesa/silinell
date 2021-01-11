@@ -55,7 +55,17 @@ class IncidentDeleteView(DeleteView):
  
 class IncidentUpdateView(UpdateView):
     model = incident
-    template_name = ".html"
+    template_name = 'dashboard/incident/update-incident.html'
+
+    fields = [ 
+        "status_action", 
+        "status_website",
+        "stickied",
+        "website_name",
+        "url",
+        "message",
+    ] 
+    success_url ="/dashboard/incident"
      
 
     
@@ -64,7 +74,7 @@ class IncidentUpdateView(UpdateView):
 class dashboardAddwebsite(View):
     form_class = Formaddwebsbite
     initial = {'key': 'value'}
-    template_name = 'dashboard/add-website.html'
+    template_name = 'dashboard/incident/add-incident.html'
     
     
     
@@ -88,13 +98,6 @@ class dashboardAddwebsite(View):
         context  = {'form': form}
         return render(request, self.template_name, context)
 
-
-    
-      
-      
-class websiteUpdate(UpdateView): 
-    model = incident
-    template_name = 'update-website.html'
 
 def search_website(request):
         getalldata = incident.objects.all().order_by('id')
@@ -122,7 +125,7 @@ def search_website(request):
             
    
         context  = {'weblist_param': weblist_param}
-        htmldata['html_data'] = render_to_string('dashboard/add-website-component.html', context, request=request)
+        htmldata['html_data'] = render_to_string('dashboard/incident/add-incident-component.html', context, request=request)
         return JsonResponse(htmldata, safe=False)
             
     

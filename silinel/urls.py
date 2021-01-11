@@ -32,6 +32,7 @@ urlpatterns = [
     path('dashboard/', views.dashboardhome.as_view(), name='dashboard'),
     path('dashboard/incident', views.dashboardAddwebsite.as_view(), name='incident_url'),
     path('dashboard/incident/delete/<int:pk>', views.IncidentDeleteView.as_view(), name='incident_url_del'),
+    path('dashboard/incident/update/<int:pk>', views.IncidentUpdateView.as_view(), name='incident_url_update'),
     path('dashboard/incident/search', csrf_exempt(views.search_website), name='incident_search'),
 
 

@@ -58,7 +58,9 @@
          
       <p>Message:&nbsp;{{web.message}}</p>
       
-      <a class="confirm-delete" style="float:right;color:red"  href="{% url 'incident_url_del' pk=web.id %}">delete</a>
+      <a class="confirm-delete ml-1" style="float:right;color:red"  href="{% url 'incident_url_del' pk=web.id %}">delete</a>
+      <a class="" style="float:right;color:blue"  href="{% url 'incident_url_update' pk=web.id %}">update</a>
+
 
 
     </tr>
@@ -95,10 +97,7 @@
 <script>
   $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();  
-    $.getScript("/static/js/pagination.js", function() {
-     con
-     });
-
+   
     
   });
 
