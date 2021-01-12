@@ -38,10 +38,11 @@ urlpatterns = [
     path('dashboard/incident/delete/<int:pk>', views.IncidentDeleteView.as_view(), name='incident_url_del'),
     path('dashboard/incident/update/<int:pk>', views.IncidentUpdateView.as_view(), name='incident_url_update'),
     path('dashboard/incident/search', csrf_exempt(views.search_website), name='incident_search'),
-    
+    path('dashboard/scheduler', views.SchedulerListView.as_view(), name='Scheduler_url'),
+    path('dashboard/scheduler/add', views.SchedulerCreateView.as_view(), name='Scheduler_add_url'),
+    path('dashboard/scheduler/delete/<int:pk>', views.SchedulerDeleteView.as_view(), name='Scheduler_url_del'),
+    path('dashboard/scheduler/update/<int:pk>', views.SchedulerUpdateView.as_view(), name='Scheduler_url_update'),
 
-    
-    
     
     
 

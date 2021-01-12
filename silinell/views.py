@@ -93,6 +93,7 @@ class dashboardAddwebsite(View):
     form_class = Formaddwebsbite
     initial = {'key': 'value'}
     template_name = 'dashboard/incident/list-incident.html'
+
     
     
     
@@ -117,10 +118,35 @@ class dashboardAddwebsite(View):
         return render(request, self.template_name, context)
     
     
-class schedule_maintance_create(CreateView):
-    template_name="dashboard/scheduler/add.html"
+class SchedulerCreateView(CreateView):
+    template_name="dashboard/scheduler/add-scheduler.html"
     model = schedule_maintance
     fields = ['name','message','when']
+    success_url= '/dashboard/scheduler'
+
+    
+# views.py
+
+
+class SchedulerListView(ListView):
+    model = schedule_maintance
+    template_name="dashboard/scheduler/list-scheduler.html"
+    context_object_name = 'schedule_maintance'
+    
+class SchedulerDeleteView(DeleteView):
+    model = schedule_maintance
+    success_url= '/dashboard/scheduler'
+    def get(self, *args, **kwargs):
+     return self.post(*args, **kwargs)
+ 
+class SchedulerUpdateView(UpdateView):
+    model = schedule_maintance
+    template_name="dashboard/scheduler/update-scheduler.html"
+    fields = ['name','message','when']
+    success_url= '/dashboard/scheduler'
+
+
+
 
 
 def search_website(request):

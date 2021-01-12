@@ -1,0 +1,73 @@
+{% load static %}
+
+ 
+
+
+</form>
+<style>
+
+
+</style>
+<br>
+<div class="h-100 ">
+<div class= "row" >
+{% if schedule_maintance.count != 0 %}
+<div class ="col-md-12">
+<ul class="list-group">
+ {% for schedule in schedule_maintance %}
+<li class="list-group-item">
+<div class="row">
+<div class="col-md-10"><a class="">{{schedule.name}}</a></div>
+<div class="col-md-2"> 
+<div class="float-right">
+<a class="btn bg-light " href="{% url 'Scheduler_url_update' pk=schedule.id %}">update</a>
+<a class="btn btn-danger confirm-delete " href="{% url 'Scheduler_url_del' pk=schedule.id %}">delete</a>
+</div>
+
+
+</div>
+</div>
+</li>
+  
+
+
+
+
+
+
+
+{% endfor %}
+</ul>
+</div>
+{% else %}
+<div class="col-md-12 h-100">
+<div style="height:260px"></div>
+<center><h3>No data available.</h3></center>
+</div>
+
+
+
+
+{% endif %}
+</div>
+</div>
+
+
+
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+    console.log("its running nigga");
+ 
+   
+    
+  });
+
+
+  
+
+  
+
+  
+  </script>
+
