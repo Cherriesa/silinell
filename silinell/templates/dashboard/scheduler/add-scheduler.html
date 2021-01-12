@@ -1,0 +1,75 @@
+{% extends "dashboard/dashboard-base.html" %}
+{% block content  %}
+<div class="row ">
+<div class="col-6"><h3>Add Scheduler</h3>
+</div>
+<div class="col-6">
+<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" data-backdrop="false">
+  <span data-toggle="tooltip" data-placement="top" data-feather="plus"></span> Add New
+</button></div>
+
+</div>
+<hr>
+
+{% load static %}
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Scheduler</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form  method="post">
+
+{% csrf_token %}
+{% load crispy_forms_tags %}
+
+{{ form|crispy }}
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input class="btn btn-success"  type="submit"  value="Submit"  />
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<input type="text" style="float:right;width:40%" class="form-control" id="searchaddwebsite" placeholder="Search by all">
+<br>
+
+
+<div class="thecontainer">
+
+{% include "dashboard/incident/add-incident-component.html" %}
+
+
+
+</div>
+  <script src="{% static 'js/addwebsite.js'%}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

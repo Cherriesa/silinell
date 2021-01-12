@@ -24,6 +24,9 @@ from django.views.generic.base import TemplateView # new
 from django.views.decorators.csrf import csrf_exempt
 
 
+handler404 = 'silinell.views.handler404'
+handler500 = 'silinell.views.handler500'
+
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('admin/', admin.site.urls),
@@ -31,10 +34,11 @@ urlpatterns = [
     path('login/', views.login.as_view(), name='login'),
     path('dashboard/', views.dashboardhome.as_view(), name='dashboard'),
     path('dashboard/incident', views.dashboardAddwebsite.as_view(), name='incident_url'),
+    path('dashboard/incident/add', views.IncidentCreateView.as_view(), name='incident_add_url'),
     path('dashboard/incident/delete/<int:pk>', views.IncidentDeleteView.as_view(), name='incident_url_del'),
     path('dashboard/incident/update/<int:pk>', views.IncidentUpdateView.as_view(), name='incident_url_update'),
     path('dashboard/incident/search', csrf_exempt(views.search_website), name='incident_search'),
-
+    
 
     
     

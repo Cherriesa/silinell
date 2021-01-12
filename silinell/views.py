@@ -12,9 +12,21 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
+from django.template import RequestContext
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 import math
+
+def handler404(request, *args, **argv):
+    response = render(request,'404.html')
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    response = render(request,'500.html')
+    response.status_code = 500
+    return response
 
 
 class SignUp(generic.CreateView):
@@ -68,13 +80,19 @@ class IncidentUpdateView(UpdateView):
     success_url ="/dashboard/incident"
      
 
-    
+class IncidentCreateView(CreateView):
+    template_name="dashboard/incident/add-incident.html"
+    model = incident
+    fields = ['website_name','status_action','status_website','stickied','url','message']
+    success_url= '/dashboard/incident'
 
+    
+    
 
 class dashboardAddwebsite(View):
     form_class = Formaddwebsbite
     initial = {'key': 'value'}
-    template_name = 'dashboard/incident/add-incident.html'
+    template_name = 'dashboard/incident/list-incident.html'
     
     
     
@@ -97,6 +115,12 @@ class dashboardAddwebsite(View):
             return HttpResponseRedirect(self.request.path_info)
         context  = {'form': form}
         return render(request, self.template_name, context)
+    
+    
+class schedule_maintance_create(CreateView):
+    template_name="dashboard/scheduler/add.html"
+    model = schedule_maintance
+    fields = ['name','message','when']
 
 
 def search_website(request):
@@ -125,7 +149,7 @@ def search_website(request):
             
    
         context  = {'weblist_param': weblist_param}
-        htmldata['html_data'] = render_to_string('dashboard/incident/add-incident-component.html', context, request=request)
+        htmldata['html_data'] = render_to_string('dashboard/incident/list-incident-component.html', context, request=request)
         return JsonResponse(htmldata, safe=False)
             
     

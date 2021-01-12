@@ -3,6 +3,11 @@
 */
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
+.full-canvas-none-data {
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #47748b !important;
+}
 
 body {
     font-family: 'Poppins', sans-serif;

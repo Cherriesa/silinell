@@ -9,17 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.utils.safestring import mark_safe
 
 class Formaddwebsbite(forms.ModelForm):
-    STATUS_ACTION_CHOICES = (
-        ('Identified', 'identified'),
-        ('Watch', 'watch'),
-        ('Fixed', 'fixed'),
-        ('Investigating', 'investigating'),
-    )
-    status_action = forms.ChoiceField(
-            choices=STATUS_ACTION_CHOICES,
-            initial=0, 
-           widget=forms.RadioSelect(
-           ))
+  
     class Meta:
         model = incident
         fields = ('website_name','status_action','status_website','stickied','url','message')
@@ -29,6 +19,19 @@ class Formaddwebsbite(forms.ModelForm):
            
             
         }
+        
+class Formaddscheduler(forms.ModelForm):
+  
+    class Meta:
+        model = schedule_maintance
+        fields = ('name','message','when')
+        widget = {
+
+
+           
+            
+        }
+    
     
 class UserCreateForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(

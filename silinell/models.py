@@ -54,6 +54,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
     
+class schedule_maintance(models.Model):
+    name = models.CharField(max_length=40 )
+    message = models.CharField(max_length=40)
+    when = models.DateTimeField(default=datetime.now, blank=True)
+    
+    
+
 class incident(models.Model):
     STATUS_ACTION_CHOICES = (
         ('Identified', 'identified'),
