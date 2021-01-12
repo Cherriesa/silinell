@@ -20,16 +20,15 @@ class Formaddwebsbite(forms.ModelForm):
             initial=0, 
            widget=forms.RadioSelect(
            ))
-  
     class Meta:
         model = incident
         fields = ('website_name','status_action','status_website','stickied','url','message')
         widget = {
 
+
            
             
         }
-
     
 class UserCreateForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(

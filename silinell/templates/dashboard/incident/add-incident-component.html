@@ -1,9 +1,7 @@
 {% load static %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
- <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-    <script>
-      feather.replace()
-    </script>
+ 
 
 
 </form>
@@ -15,7 +13,6 @@
 <div style="height:100%">
 <div class= "row" >
 
-
 {% for web in weblist_param %}
 <div class ="col-md-4">
 
@@ -26,40 +23,43 @@
      <h2>
      
          {{web.website_name}}
-          {% if web.status_website == 'Up' %}
-        <a href="#" data-toggle="tooltip" style='color:green'  title="this incident is up"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-up"></span></a>
-        {%else%}
-         <a href="#" data-toggle="tooltip" style='color:red' title="this incident is down"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-down"></span></a>
-
-          {%endif%}
-           {% if web.stickied == 'Stikced' %}
-        <a href="#" data-toggle="tooltip" style='color:black'  title="this incident is stickied"><span data-toggle="tooltip" data-placement="top" data-feather="award"></span></a>
-          {%endif%}
+         
          
         </h2>
       
      
     
-      <h4>
+      <p>
       {% if web.status_action == 'Identified' %}
-       <span class="badge badge-primary"><span data-toggle="tooltip" data-placement="top" data-feather="flag"></span>&nbsp;{{web.status_action}}</span>
+       <span class=""><span data-toggle="tooltip" data-placement="top" data-feather="flag" data-toggle="tooltip" title="Identified"></span></span>
       {% elif web.status_action == 'Fixed' %}
-       <span class="badge badge-success"><span data-toggle="tooltip" data-placement="top" data-feather="check-circle"></span>&nbsp;{{web.status_action}}</span>
+       <span class=""><span data-toggle="tooltip" data-placement="top" data-feather="check-circle" data-toggle="tooltip" title="Fixed"></span></span>
       {% elif web.status_action == 'Watch' %}
-       <span class="badge badge-secondary"><span data-toggle="tooltip" data-placement="top" data-feather="eye"></span>&nbsp;{{web.status_action}}</span>
+       <span class=""><span data-toggle="tooltip" data-placement="top" data-feather="eye" data-toggle="tooltip" title="Watch"></span></span>
       {% elif web.status_action == 'Investigating' %}
-       <span class="badge badge-info"><span data-toggle="tooltip" data-placement="top" data-feather="search"></span>&nbsp;{{web.status_action}}</span>
+       <span class=""><span data-toggle="tooltip" data-placement="top" data-feather="search" data-toggle="tooltip" title="Investigating"></span></span>
       {%endif%}
+       {% if web.status_website == 'Up' %}
+        <a data-toggle="tooltip" style='color:green'  title="this incident is up"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-up"></span></a>
+        {%else%}
+         <a data-toggle="tooltip" style='color:red' title="this incident is down"><span data-toggle="tooltip" data-placement="top" data-feather="arrow-down"></span></a>
+
+          {%endif%}
+           {% if web.stickied == 'Stikced' %}
+        <a data-toggle="tooltip" style='color:black'  title="this incident is stickied"><span data-toggle="tooltip" data-placement="top" data-feather="award"></span></a>
+          {%endif%}
 
 
 
 
-      </h4>
+      </p>
          
       <p>Message:&nbsp;{{web.message}}</p>
-      
-      <a class="confirm-delete ml-1" style="float:right;color:red"  href="{% url 'incident_url_del' pk=web.id %}">delete</a>
-      <a class="" style="float:right;color:blue"  href="{% url 'incident_url_update' pk=web.id %}">update</a>
+      <a class="btn bg-light ml-1" href="{% url 'incident_url_update' pk=web.id %}">update</a>
+
+      <a class="btn btn-danger confirm-delete" href="{% url 'incident_url_del' pk=web.id %}">delete</a>
+
+
 
 
 
@@ -93,10 +93,13 @@
 
 
 
+<script src="{% static 'js/pagination.js'%}"></script>
 
 <script>
   $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();  
+    $('[data-toggle="tooltip"]').tooltip(); 
+    console.log("its running nigga");
+ 
    
     
   });

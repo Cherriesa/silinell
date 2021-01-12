@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from datetime import datetime
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -76,7 +76,8 @@ class incident(models.Model):
     stickied = models.CharField(max_length=40, choices= STATUS_STICKED_CHOICES, default="Stikced" )
     website_name = models.CharField(max_length=50)
     url = models.CharField(max_length=30, blank=True)
-    message  = models.CharField(max_length=30, blank=True)
+    message  = models.TextField(max_length=300, blank=True)
+    date_occur = models.DateTimeField(default=datetime.now, blank=True)
     
     def __str__(self):
      return self.website_name

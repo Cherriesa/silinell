@@ -11,7 +11,7 @@ $(document).on('click', '.confirm-delete', function(){
 
 
 
-search.addEventListener("keyup",(e) => {
+search.addEventListener("input",(e) => {
     e.preventDefault();
     const searchvalue = e.target.value;
 
@@ -33,9 +33,12 @@ search.addEventListener("keyup",(e) => {
           
         
         .then((datahtml) =>{
-            $(thecontainer).html('')
-            $(thecontainer).html(datahtml.html_data)
-
+            $(thecontainer).html('');
+            if($(thecontainer).html() == "" ){
+                $(thecontainer).html(datahtml.html_data)
+ 
+            }
+            
             
 
 
