@@ -2,27 +2,21 @@
 
  
 
-
-</form>
-<style>
-
-
-</style>
 <br>
-<div class="h-100 ">
+<div class="h-100 p-0">
 <div class= "row" >
 {% if weblist_param.count != 0 %}
  {% for web in weblist_param %}
 <div class ="col-md-4">
 
 
-<div class="card line-content mt-4" style="display:none" >
+<div class="card line-content mb-4" style="display:none" >
   <div class="card-body">
       <div class="row">
       <div class="col-md-6">
        <h2>
      
-         {{web.website_name}}
+         {{web.name}}
          
          
          
@@ -39,7 +33,7 @@
       {% elif web.status_action == 'Investigating' %}
        <span class=""><i class="fas fa-search"></i></span>
       {%endif%}
-       {% if web.status_website == 'Up' %}
+       {% if web.status_Downtime == 'Up' %}
         <a data-toggle="tooltip" style='color:green'  title="this incident is up"><i class="fas fa-arrow-up"></i></a>
         {%else%}
          <a data-toggle="tooltip" style='color:red' title="this incident is down"><i class="fas fa-arrow-down"></i></a>

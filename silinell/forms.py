@@ -5,26 +5,24 @@ from django.contrib.auth.models import User
 from .models import *
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.forms import ModelForm, Textarea
 from django.utils.safestring import mark_safe
 
 class Formaddwebsbite(forms.ModelForm):
-  
     class Meta:
         model = incident
-        fields = ('website_name','status_action','status_website','stickied','url','message')
+        fields = '__all__'
         widget = {
-
-
-           
-            
+         
         }
         
 class Formaddscheduler(forms.ModelForm):
-  
+    when = forms.DateField(widget=forms.TextInput(     
+    attrs={'type': 'date','placeholder':'Password'})
+)  
     class Meta:
         model = schedule_maintance
-        fields = ('name','message','when')
+        fields = '__all__'
         widget = {
 
 

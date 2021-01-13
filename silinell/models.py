@@ -58,6 +58,29 @@ class schedule_maintance(models.Model):
     name = models.CharField(max_length=40 )
     message = models.CharField(max_length=40)
     when = models.DateTimeField(default=datetime.now, blank=True)
+
+
+
+class component_group(models.Model):
+    COLLAPSE_CHOICES = (
+        ('Always expanded', 'Always expanded'),
+        ('Always collapse', 'Always collapse'),
+        ('Collapse but expand if there are issues', 'Collapse but expand if there are issues'),
+    )
+    name = models.CharField(max_length=40 )
+    status = models.CharField(max_length=40)
+    Description =  models.TextField(max_length=300, blank=True)
+
+
+
+class component(models.Model):
+    name = models.CharField(max_length=40 )
+    status = models.CharField(max_length=40)
+    Description =  models.TextField(max_length=300, blank=True)
+    when = models.DateTimeField(default=datetime.now, blank=True)
+    link = models.CharField(max_length=100)
+    tags = models.CharField(max_length=100)
+    enabled = models.BooleanField(default=True)
     
     
 
@@ -68,7 +91,7 @@ class incident(models.Model):
         ('Fixed', 'fixed'),
         ('Investigating', 'investigating'),
     )
-    STATUS_UPTIME_CHOICES = (
+    STATUS_DOWNTIME_CHOICES = (
         ('Down', 'Down'),
         ('Up', 'up'),
      
@@ -78,11 +101,16 @@ class incident(models.Model):
         ('Un Stikced', 'Un Stikced'),
      
     )
+    STATUS_Visibility_CHOICES = (
+        ('Viewable by public', 'Viewable by public'),
+        ('Only logged in users can see', 'Only logged in users can see'),
+     
+    )
     status_action = models.CharField(max_length=40, choices= STATUS_ACTION_CHOICES )
-    status_website = models.CharField(max_length=40, choices= STATUS_UPTIME_CHOICES )
+    status_Downtime = models.CharField(max_length=40, choices= STATUS_DOWNTIME_CHOICES,default="Up" )
+    Visibility = models.CharField(max_length=40, choices= STATUS_Visibility_CHOICES, default="Viewable by public" )
     stickied = models.CharField(max_length=40, choices= STATUS_STICKED_CHOICES, default="Stikced" )
-    website_name = models.CharField(max_length=50)
-    url = models.CharField(max_length=30, blank=True)
+    name = models.CharField(max_length=50)
     message  = models.TextField(max_length=300, blank=True)
     date_occur = models.DateTimeField(default=datetime.now, blank=True)
     

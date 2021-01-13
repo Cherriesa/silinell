@@ -30,7 +30,16 @@
 </head>
 
 <body>
-
+    {% if messages %}
+    <div id="alertbox" style="position:fixed;z-index:999;" class="alert alert-warning alert-dismissible fade show w-100"  role="alert">
+      {% for message in messages %}
+       {{ message }}
+       {% endfor %}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endif %}
    <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -44,17 +53,11 @@
 
             </li>
                 <li class = "{% if request.path == '/dashboard/incident'%}active{% endif %}">
-                   
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Incident &amp; scheduler</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                         <a href="{% url 'incident_url'%}">Incident</a>
-
-                          </li>
-                        <li>
-                            <a href="{% url 'Scheduler_url'%}">Scheduler</a>
-                        </li>
-                    </ul>
+                    <a href="{% url 'incident_url'%}">Incident&nbsp;<span class="badge badge-light">{{incidents}}</span></a>
+                    
+                </li>
+                <li>
+                    <a href="{% url 'Scheduler_url'%}">Scheduler maitance&nbsp;<span class="badge badge-light">{{schedule_maintances}}</span></a>
                 </li>
                 <li>
                    
@@ -136,6 +139,7 @@
 
 
     <script type="text/javascript">
+    $('.alert').alert()
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');

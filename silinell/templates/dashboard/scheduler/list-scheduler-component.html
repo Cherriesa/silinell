@@ -8,13 +8,16 @@
 
 
 </style>
+
 <br>
 <div class="h-100 ">
 <div class= "row" >
-{% if schedule_maintance.count != 0 %}
+{% if schedule_maintances != 0 %}
+<h4 class="pl-3">You have {{schedule_maintances}} scheduler </h4>
 <div class ="col-md-12">
 <ul class="list-group">
  {% for schedule in schedule_maintance %}
+ <br>
 <li class="list-group-item">
 <div class="row">
 <div class="col-md-10"><a class="">{{schedule.name}}</a></div>

@@ -33,7 +33,6 @@ var next = $("<li/>").addClass("next page-link").html("Next").click(function(){
 $("#pagin").prepend(prev).append(next);
 
 $("#pagin li").first().find("a").addClass("current");
-
 slide = function(sens){
    $("#pagin li").hide();
    
@@ -64,6 +63,8 @@ showPage = function(page) {
     
 showPage(1);
 $("#pagin li a").eq(0).addClass("current");
+$("#pagin .page-item").eq(0).addClass("active");
+
 
 $("#pagin li a").click(function() {
    $("#pagin li a").removeClass("current");
@@ -76,3 +77,4 @@ $("#pagin li a").click(function() {
    $(this).removeAttr("id");
 	 showPage(parseInt($(this).text()));
 });
+

@@ -16,6 +16,8 @@ from django.template import RequestContext
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 import math
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 def handler404(request, *args, **argv):
     response = render(request,'404.html')
@@ -27,6 +29,11 @@ def handler500(request, *args, **argv):
     response = render(request,'500.html')
     response.status_code = 500
     return response
+
+def badgesnotif_processor(request):
+  schedule_maintances = schedule_maintance.objects.all().count()
+  incidents = incident.objects.all().count()
+  return {'incidents': incidents,'schedule_maintances':schedule_maintances}
 
 
 class SignUp(generic.CreateView):
@@ -65,26 +72,22 @@ class IncidentDeleteView(DeleteView):
     def get(self, *args, **kwargs):
      return self.post(*args, **kwargs)
  
-class IncidentUpdateView(UpdateView):
+class IncidentUpdateView(SuccessMessageMixin,UpdateView):
     model = incident
     template_name = 'dashboard/incident/update-incident.html'
-
-    fields = [ 
-        "status_action", 
-        "status_website",
-        "stickied",
-        "website_name",
-        "url",
-        "message",
-    ] 
+    fields = '__all__'
     success_url ="/dashboard/incident"
+    success_message = "%(name)s was update successfully"
+
      
 
-class IncidentCreateView(CreateView):
+class IncidentCreateView(SuccessMessageMixin,CreateView):
     template_name="dashboard/incident/add-incident.html"
     model = incident
-    fields = ['website_name','status_action','status_website','stickied','url','message']
+    fields = '__all__'
     success_url= '/dashboard/incident'
+    success_message = "%(name)s was created successfully"
+
 
     
     
@@ -124,9 +127,6 @@ class SchedulerCreateView(CreateView):
     fields = ['name','message','when']
     success_url= '/dashboard/scheduler'
 
-    
-# views.py
-
 
 class SchedulerListView(ListView):
     model = schedule_maintance
@@ -158,9 +158,8 @@ def search_website(request):
                 searcher = getalldata
                 print("data kosong revert ke all data")
             else:
-                searcher = incident.objects.filter(website_name__icontains= search_str)| incident.objects.filter(status_website__icontains = search_str)|incident.objects.filter(
+                searcher = incident.objects.filter(name__icontains= search_str)| incident.objects.filter(status_Downtime__icontains = search_str)|incident.objects.filter(
                 status_action__icontains= search_str )| incident.objects.filter(
-                url__icontains = search_str )|incident.objects.filter(
                 message__icontains = search_str )
              
             
