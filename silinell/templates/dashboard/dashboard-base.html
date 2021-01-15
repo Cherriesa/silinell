@@ -16,7 +16,8 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
 
     <link href="{% static 'bootstrap/css/style.css'%}" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
     <!-- Custom styles for this template -->
        
 
@@ -31,9 +32,9 @@
 
 <body>
     {% if messages %}
-    <div id="alertbox" style="position:fixed;z-index:999;" class="alert alert-warning alert-dismissible fade show w-100"  role="alert">
       {% for message in messages %}
-       {{ message }}
+      <div id="alertbox" style="position:fixed;z-index:999;" class="alert alert-{%if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%} alert-dismissible fade show w-100"  role="alert">
+      {{ message }}
        {% endfor %}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -56,21 +57,17 @@
                     <a href="{% url 'incident_url'%}">Incident&nbsp;<span class="badge badge-light">{{incidents}}</span></a>
                     
                 </li>
-                <li>
+                <li class = "{% if request.path == '/dashboard/scheduler' %}active{% endif %}">
                     <a href="{% url 'Scheduler_url'%}">Scheduler maitance&nbsp;<span class="badge badge-light">{{schedule_maintances}}</span></a>
                 </li>
                 <li>
-                   
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">components</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Page 1</a>
+                            <a href="{% url 'component_url'%}">Component&nbsp;<span class="badge badge-light">{{componennya}}</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
+                            <a href="{% url 'component-group_url'%}">Component Group&nbsp;<span class="badge badge-light">{{component_groups}}</a>
                         </li>
                     </ul>
                 </li>
@@ -83,13 +80,7 @@
             </ul>
 
             <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
-            </ul>
+              
         </nav>
 
         <!-- Page Content Holder -->
@@ -125,6 +116,8 @@
                     </div>
                 </div>
             </nav>
+
+
             
 
       {% block content %}
@@ -139,6 +132,7 @@
 
 
     <script type="text/javascript">
+    
     $('.alert').alert()
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -147,6 +141,44 @@
             });
         });
     </script>
+<div class="modal fade mx-auto" id="confirmDeleteModal" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        The <span id="value_message"></span>&nbsp; Will be deleted This action is permanent!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+
+$(document).on('click', '.confirm-delete', function () {
+    $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+     const param_id = ($(this).attr("hola"))
+     const valuemessageparam = document.querySelector("#value_message")
+     $(valuemessageparam).html("<strong>" + param_id + "</strong>")
+   
+
+
+
+  });
+
+$(document).on('click', '#confirmDeleteButtonModal', function () {
+  var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+  window.location = $("#".concat(caller)).attr("href");
+});
+
+$(document).ready(function() {
+  $("#alertbox").fadeTo(2000, 500).slideUp(500, function() {
+  $("#alertbox").slideUp(500);
+});
+  });
+
+</script>
 </body>
 
 </html>

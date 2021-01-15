@@ -17,6 +17,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 import math
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 
 def handler404(request, *args, **argv):
@@ -33,7 +34,11 @@ def handler500(request, *args, **argv):
 def badgesnotif_processor(request):
   schedule_maintances = schedule_maintance.objects.all().count()
   incidents = incident.objects.all().count()
-  return {'incidents': incidents,'schedule_maintances':schedule_maintances}
+  componennya = component.objects.all().count()
+  component_groups = component_group.objects.all().count()
+
+
+  return {'incidents': incidents,'schedule_maintances':schedule_maintances,'component_groups':component_groups,'componennya':componennya}
 
 
 class SignUp(generic.CreateView):
@@ -64,13 +69,18 @@ class dashboardhome(View):
     
    return render(request, self.template_name)
 
-class IncidentDeleteView(DeleteView):
+class IncidentDeleteView(SuccessMessageMixin,DeleteView):
     model = incident
     success_url= '/dashboard/incident'
-    
+    success_message = "Object deleted"
+    def delete(self, request, *args, **kwargs):
+        messages.error(self.request, self.success_message)
+        return super(IncidentDeleteView, self).delete(request, *args, **kwargs)
     
     def get(self, *args, **kwargs):
      return self.post(*args, **kwargs)
+ 
+
  
 class IncidentUpdateView(SuccessMessageMixin,UpdateView):
     model = incident
@@ -121,11 +131,13 @@ class dashboardAddwebsite(View):
         return render(request, self.template_name, context)
     
     
-class SchedulerCreateView(CreateView):
+class SchedulerCreateView(SuccessMessageMixin,CreateView):
     template_name="dashboard/scheduler/add-scheduler.html"
     model = schedule_maintance
-    fields = ['name','message','when']
+    form_class = Formaddscheduler
     success_url= '/dashboard/scheduler'
+    success_message = "%(name)s was create successfully"
+
 
 
 class SchedulerListView(ListView):
@@ -136,15 +148,81 @@ class SchedulerListView(ListView):
 class SchedulerDeleteView(DeleteView):
     model = schedule_maintance
     success_url= '/dashboard/scheduler'
+    success_message = "Object deleted"
+    def delete(self, request, *args, **kwargs):
+        messages.warning(self.request, self.success_message)
+        return super(SchedulerDeleteView, self).delete(request, *args, **kwargs)
     def get(self, *args, **kwargs):
      return self.post(*args, **kwargs)
  
-class SchedulerUpdateView(UpdateView):
+class SchedulerUpdateView(SuccessMessageMixin,UpdateView):
     model = schedule_maintance
     template_name="dashboard/scheduler/update-scheduler.html"
-    fields = ['name','message','when']
+    form_class = Formaddscheduler
     success_url= '/dashboard/scheduler'
+    success_message = "%(name)s was update successfully"
 
+    
+    
+class ComponentCreateView(SuccessMessageMixin,CreateView):
+    template_name="dashboard/component/add-component.html"
+    model = component
+    form_class = FormComponent
+    success_url= '/dashboard/component'
+    success_message = "%(name)s was create successfully"
+
+    
+class ComponentListView(ListView):
+    model = component
+    template_name="dashboard/component/list-component.html"
+    context_object_name = 'components'
+
+class ComponentUpdateView(SuccessMessageMixin,UpdateView):
+    model = component
+    template_name = 'dashboard/component/update-component.html'
+    form_class = FormComponent
+    success_url ="/dashboard/component"
+    success_message = "%(name)s was update successfully"
+    
+class ComponentDeleteView(DeleteView):
+    model = component
+    success_url= '/dashboard/component'
+    success_message = "Object deleted"
+    def delete(self, request, *args, **kwargs):
+        messages.warning(self.request, self.success_message)
+        return super(ComponentDeleteView, self).delete(request, *args, **kwargs)
+    def get(self, *args, **kwargs):
+     return self.post(*args, **kwargs)
+    
+class ComponentGroupCreateView(SuccessMessageMixin,CreateView):
+    template_name="dashboard/component/add-component_group.html"
+    model = component_group
+    form_class = FormComponentGroup
+    success_url= '/dashboard/component/group'
+    success_message = "%(name)s was create successfully"
+
+
+class ComponentGroupListView(ListView):
+    model = component_group
+    template_name="dashboard/component/list-component_group.html"
+    context_object_name = 'components_group'
+
+class ComponentGroupUpdateView(SuccessMessageMixin,UpdateView):
+    model = component_group
+    template_name = 'dashboard/component/update-component_group.html'
+    form_class = FormComponentGroup
+    success_url ="/dashboard/component/group"
+    success_message = "%(name)s was update successfully"
+    
+class ComponentGroupDeleteView(DeleteView):
+    model = component_group
+    success_url= '/dashboard/component/group'
+    success_message = "Object deleted"
+    def delete(self, request, *args, **kwargs):
+        messages.warning(self.request, self.success_message)
+        return super(ComponentGroupDeleteView, self).delete(request, *args, **kwargs)
+    def get(self, *args, **kwargs):
+     return self.post(*args, **kwargs)
 
 
 

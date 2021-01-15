@@ -8,6 +8,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.forms import ModelForm, Textarea
 from django.utils.safestring import mark_safe
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class Formaddwebsbite(forms.ModelForm):
     class Meta:
         model = incident
@@ -15,15 +18,39 @@ class Formaddwebsbite(forms.ModelForm):
         widget = {
          
         }
+class FormComponentGroup(forms.ModelForm):
+    class Meta:
+        model = component_group
+        fields = '__all__'
+        widget = {
+         
+        }
+        
+class FormComponent(forms.ModelForm):
+    group = forms.ModelChoiceField(queryset=component_group.objects.all(),required=False)
+    when = forms.DateField(widget=forms.TextInput(     
+    attrs={'type': 'date'})
+      )  
+    class Meta:
+        model = component
+        fields = '__all__'
+        widget = {
+             'when':DateInput(),
+         
+        }
         
 class Formaddscheduler(forms.ModelForm):
     when = forms.DateField(widget=forms.TextInput(     
-    attrs={'type': 'date','placeholder':'Password'})
-)  
+    attrs={'type': 'date'})
+      ) 
+    message = forms.CharField(max_length=400, required=False)
     class Meta:
         model = schedule_maintance
         fields = '__all__'
         widget = {
+            'when':DateInput(),
+            'message': Textarea(attrs={'rows':80, 'cols':20}),
+           
 
 
            

@@ -57,7 +57,7 @@ showPage = function(page) {
 	  $(".line-content").hide();
 	  $(".line-content").each(function(n) {
 	      if (n >= pageSize * (page - 1) && n < pageSize * page)
-	          $(this).show('fast')
+	          $(this).show()
 	  });        
 }
     

@@ -1,0 +1,42 @@
+{% extends "dashboard/dashboard-base.html" %}
+{% block content  %}
+<div class="row ">
+<div class="col-6"><h3>Component Group</h3>
+</div>
+<div class="col-6">
+<a href="{% url 'component-group_url_add' %}" class="btn button-add float-right text-light">
+  <span data-toggle="tooltip" data-placement="top" data-feather="plus"></span> Add New
+</a></div>
+
+</div>
+<hr>
+
+{% load static %}
+
+<!-- Button trigger modal -->
+
+
+
+<div class="thecontainer">
+
+{% include "dashboard/component/list-component_group-component.html" %}
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

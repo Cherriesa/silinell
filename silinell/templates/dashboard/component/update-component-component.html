@@ -1,0 +1,9 @@
+{% load static %}
+<form method="post">  
+    {% csrf_token %}  
+{% load crispy_forms_tags %}
+
+{{ form|crispy }}
+<button type="reset" class="btn btn-danger" >Cancel</button>
+<input class="btn btn-success"  type="submit"  value="Submit"  /> 
+</form>  

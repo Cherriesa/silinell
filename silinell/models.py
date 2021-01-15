@@ -56,34 +56,38 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
 class schedule_maintance(models.Model):
     name = models.CharField(max_length=40 )
-    message = models.CharField(max_length=40)
+    message = models.TextField(max_length=300, blank=True)
     when = models.DateTimeField(default=datetime.now, blank=True)
-
-
-
+    
 class component_group(models.Model):
     COLLAPSE_CHOICES = (
         ('Always expanded', 'Always expanded'),
         ('Always collapse', 'Always collapse'),
         ('Collapse but expand if there are issues', 'Collapse but expand if there are issues'),
     )
-    name = models.CharField(max_length=40 )
-    status = models.CharField(max_length=40)
+    name = models.CharField(max_length=40,blank=True)
+    visibility = models.CharField(max_length=40,choices=COLLAPSE_CHOICES,default='Always expanded')
     Description =  models.TextField(max_length=300, blank=True)
-
-
+    
+    def __str__(self):
+     return self.name
 
 class component(models.Model):
-    name = models.CharField(max_length=40 )
-    status = models.CharField(max_length=40)
+    STATUS_CHOICES = (
+        ('Operational', 'Operational'),
+        ('Perfomance Issue', 'Perfomance Issue'),
+        ('Partial Outage', 'Partial Outage'),
+        ('Major Outage', 'Major Outage'),
+    )
+    name = models.CharField(max_length=40)
+    status = models.CharField(max_length=40, choices=STATUS_CHOICES)
     Description =  models.TextField(max_length=300, blank=True)
+    group = models.CharField(max_length=40, blank=True,null=True)
     when = models.DateTimeField(default=datetime.now, blank=True)
-    link = models.CharField(max_length=100)
-    tags = models.CharField(max_length=100)
+    link = models.CharField(max_length=100, blank=True)
+    tags = models.CharField(max_length=100, blank=True)
     enabled = models.BooleanField(default=True)
     
-    
-
 class incident(models.Model):
     STATUS_ACTION_CHOICES = (
         ('Identified', 'identified'),
@@ -115,5 +119,10 @@ class incident(models.Model):
     date_occur = models.DateTimeField(default=datetime.now, blank=True)
     
     def __str__(self):
-     return self.website_name
+     return self.name
+ 
+  
+
+
+    
 
