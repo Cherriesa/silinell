@@ -20,50 +20,62 @@
 <li class="list-group-item">
 <div class="d-flex">
   
-  <div class="mr-auto ml-5 pt-3"><a class="dropdown-toggle" data-toggle="collapse" href="#collapseExample{{web.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"></a>{{web.name}}</div>
-  <div class="p-2"><a class="btn bg-light" href="{% url 'incident_url_update' pk=web.id %}">update</a></div>
-  <div class="p-2"><a class="btn btn-danger confirm-delete " hola="{{web.name}}" href="{% url 'incident_url_del' pk=web.id %}" title="Delete"  data-toggle="modal" data-target="#confirmDeleteModal" hola="{{web.id}}" id="deleteButton{{web.id}}">delete</a></div>
+  <div class="mr-auto ml-5 pt-2"><a class="dropdown-toggle" data-toggle="collapse" href="#collapseExample{{web.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"></a>{{web.name}}</div>
+  <div class="mr-2"><a class="btn bg-light" href="{% url 'incident_url_update' pk=web.id %}">update</a></div>
+  <div class=""><a class="btn btn-danger confirm-delete " hola="{{web.name}}" href="{% url 'incident_url_del' pk=web.id %}" title="Delete"  data-toggle="modal" data-target="#confirmDeleteModal" hola="{{web.id}}" id="deleteButton{{web.id}}">delete</a></div>
 </div>
 </li>
 <div class="collapse h-60 mb-2" id="collapseExample{{web.id}}">
   <div class="card card-body h-100">
-  <table>
-  <tr>
-    <td><strong>name</strong></td>
-    <td class="px-1">:</td>
-    <td>{{web.name}}</td>
-  </tr>
-  <tr>
-    <td><strong>stickied</strong></td>
-    <td class="px-1">:</td>
-    <td>{{web.stickied}}</td>
-  </tr>
-  <tr>
-    <td><strong>action</strong></td>
-    <td class="px-1">:</td>
-    <td>{{web.status_action }}</td>
-  </tr>
-  <tr>
-    <td><strong>downtime</strong></td>
-    <td class="px-1">:</td>
-    <td>{{web.status_Downtime}}</td>
-  </tr>
-  <tr>
-    <td><strong>visibilty</strong></td>
-    <td class="px-1">:</td>
-    <td>{{web.Visibility}}</td>
-  </tr>
-  <tr>
-    <td><strong>date_ocur</strong></td>
-    <td class="px-1">:</td>
-    <td>{{web.date_occur}}</td>
-  </tr>
-  <tr>
-    <td><strong>message</strong></td>
-    <td class="px-1">:</td>
-    <td>{{web.message}}</td>
-  </tr>
-</table>
+    <div class="row w-50">
+      <div class="col-md-3">
+        <table>
+          <tr>
+            <td style="width: 5%"><strong>name</strong></td>
+            <td class="px-1" style="width:1%">:</td>
+            <td>{{web.name}}</td>
+          </tr>
+          <tr>
+            <td><strong>stickied</strong></td>
+            <td class="px-1">:</td>
+            <td>{{web.stickied}}</td>
+          </tr>
+          <tr>
+            <td><strong>action</strong></td>
+            <td class="px-1">:</td>
+            <td>{{web.status_action }}</td>
+          </tr>
+          <tr>
+            <td><strong>downtime</strong></td>
+            <td class="px-1">:</td>
+            <td>{{web.status_Downtime}}</td>
+          </tr>
+          </table>
+      </div>
+      <div class="col-md-9">
+      <table>
+        <tr>
+          <td><strong>visibilty</strong></td>
+          <td class="px-1">:</td>
+          <td>{{web.Visibility}}</td>
+        </tr>
+        <tr>
+          <td><strong>date_ocur</strong></td>
+          <td class="px-1">:</td>
+          <td>{{web.date_occur}}</td>
+        </tr>
+        <tr>
+          <td><strong>message</strong></td>
+          <td class="px-1">:</td>
+          <td>{{web.message}}</td>
+        </tr>
+      </table>
+
+      </div>
+
+    </div>
+ 
+  
   
   </div>
 </div>

@@ -19,9 +19,9 @@
  <br>
 <li class="list-group-item">
 <div class="d-flex">
-  <div class="mr-auto ml-5 pt-3">{{component_group.name}}</div>
-  <div class="p-2"><a class="btn bg-light" href="{% url 'component-group_url_update' pk=component_group.id%} ">update</a></div>
-  <div class="p-2"><a class="btn btn-danger confirm-delete " hola="{{component_group.name}}" href="{% url 'component-group_url_del' pk=component_group.id%}" title="Delete"  data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{component_group.id}}">delete</a></div>
+  <div class="mr-auto ml-5 pt-2">{{component_group.name}}</div>
+  <div class="mr-2"><a class="btn bg-light" href="{% url 'component-group_url_update' pk=component_group.id%} ">update</a></div>
+  <div class=""><a class="btn btn-danger confirm-delete " hola="{{component_group.name}}" href="{% url 'component-group_url_del' pk=component_group.id%}" title="Delete"  data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{component_group.id}}">delete</a></div>
 </div>
 </li>
   

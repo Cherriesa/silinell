@@ -20,9 +20,9 @@
 <br>
 <li class="list-group-item">
 <div class="d-flex">
-  <div class="mr-auto ml-5 pt-3">{{schedule.name}}</div>
-  <div class="p-2"><a class="btn bg-light" href="{% url 'Scheduler_url_update' pk=schedule.id %}">update</a></div>
-  <div class="p-2"><a class="btn btn-danger confirm-delete " hola="{{schedule.name}}" href="{% url 'Scheduler_url_del' pk=schedule.id %}" title="Delete"  data-toggle="modal" data-target="#confirmDeleteModal" hola="{{schedule.id}}" id="deleteButton{{schedule.id}}">delete</a></div>
+  <div class="mr-auto ml-5 pt-2">{{schedule.name}}</div>
+  <div class="mr-2"><a class="btn bg-light" href="{% url 'Scheduler_url_update' pk=schedule.id %}">update</a></div>
+  <div class=""><a class="btn btn-danger confirm-delete " hola="{{schedule.name}}" href="{% url 'Scheduler_url_del' pk=schedule.id %}" title="Delete"  data-toggle="modal" data-target="#confirmDeleteModal" hola="{{schedule.id}}" id="deleteButton{{schedule.id}}">delete</a></div>
 </div>
 </li>
   

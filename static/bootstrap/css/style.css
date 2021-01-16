@@ -1,7 +1,10 @@
 /*
     DEMO STYLE
 */
-
+.list-group-item{
+    border: none !important;
+    background-color: #F5F5F5 !important;
+}
 .card{
     background-color: #f5f5f5 !important;
     border: 0;
